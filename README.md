@@ -2,6 +2,10 @@
 
 Ứng dụng chuyển đổi văn bản thành giọng nói (Text-to-Speech) chuẩn giao diện **GNOME / Linux (GTK 4 & Libadwaita)**, tích hợp mô hình trí tuệ nhân tạo **V-TTS** siêu nhẹ chạy trực tiếp trên vi xử lý CPU mà không cần card đồ họa rời (GPU).
 
+<p align="center">
+  <img src="assets/screenshots/desktop-preview.jpg" alt="Giao diện Văn bản thành giọng đọc trên Ubuntu" width="100%" />
+</p>
+
 ---
 
 ## ⚡ Cài đặt nhanh bằng 1 lệnh duy nhất (Mọi hệ điều hành Linux)
