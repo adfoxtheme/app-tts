@@ -4,6 +4,27 @@
 
 ---
 
+## ⚡ Cài đặt nhanh bằng 1 lệnh duy nhất (Mọi hệ điều hành Linux)
+
+Mở Terminal ở **bất kỳ thư mục nào** và dán lệnh sau để cài đặt tự động:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/adfoxtheme/app-tts/main/install.sh | bash
+```
+
+> Hoặc dùng `bash -c`:
+> ```bash
+> bash -c "$(curl -fsSL https://raw.githubusercontent.com/adfoxtheme/app-tts/main/install.sh)"
+> ```
+
+Script sẽ tự động:
+1. Nhận diện hệ điều hành (Ubuntu, Debian, Fedora, Arch Linux, openSUSE, Alpine,...) và đảm bảo đủ thư viện đồ họa hệ thống (GTK4, Libadwaita, GStreamer).
+2. Tạo môi trường Python ảo độc lập trong thư mục người dùng (`~/.local/share/van-ban-thanh-giong-doc`).
+3. Tải và cài đặt các thư viện AI chuyên biệt cho vi xử lý CPU (nhanh, nhẹ, không tốn tài nguyên).
+4. Đăng ký lệnh `van-ban-thanh-giong-doc` vào Terminal và thêm ứng dụng vào Desktop Menu với biểu tượng vector sắc nét.
+
+---
+
 ## ✨ Tính năng nổi bật
 
 * **Giao diện chuẩn GNOME / Libadwaita**:
@@ -27,36 +48,6 @@
 
 ---
 
-## 🛠️ Yêu cầu hệ thống
-
-* **Hệ điều hành**: Linux (Ubuntu 22.04+, Debian 12+, Fedora 38+, Arch Linux,...).
-* **Môi trường đồ họa**: GNOME hoặc bất kỳ Desktop Environment nào hỗ trợ GTK4 / Libadwaita.
-* **Phần cứng**: Vi xử lý CPU tiêu chuẩn (không bắt buộc có card GPU rời).
-* **Python**: Python 3.10 trở lên cùng các gói GObject Introspection (`gir1.2-gtk-4.0`, `gir1.2-adw-1`, `python3-gi`).
-
----
-
-## 🚀 Hướng dẫn cài đặt
-
-Mở Terminal và chạy các lệnh sau:
-
-```bash
-# 1. Clone repository về máy
-git clone https://github.com/adfoxtheme/app-tts.git
-cd app-tts
-
-# 2. Cấp quyền thực thi và chạy script cài đặt
-chmod +x install.sh
-./install.sh
-```
-
-Quá trình cài đặt sẽ:
-1. Sao chép chương trình vào thư mục người dùng: `~/.local/share/van-ban-thanh-giong-doc/`
-2. Thiết lập môi trường Python ảo cách ly độc lập (không làm ảnh hưởng tới hệ điều hành).
-3. Đăng ký phím tắt trong danh mục ứng dụng của Linux (`io.github.adfoxtheme.VanBanThanhGiongDoc.desktop`) cùng bộ biểu tượng vector sắc nét.
-
----
-
 ## 💻 Cách sử dụng
 
 * **Từ Menu ứng dụng**: Nhấn phím `Super` (phím Windows), tìm kiếm **"Văn bản thành giọng đọc"** và nhấp để mở.
@@ -67,14 +58,25 @@ Quá trình cài đặt sẽ:
 
 ---
 
-## 🗑️ Gỡ cài đặt
+## 🛠️ Cài đặt thủ công (Dành cho nhà phát triển)
 
-Nếu bạn muốn gỡ bỏ hoàn toàn ứng dụng khỏi hệ thống, chạy lệnh:
+Nếu bạn đã clone repository về máy:
 
 ```bash
+git clone https://github.com/adfoxtheme/app-tts.git
 cd app-tts
-chmod +x uninstall.sh
-./uninstall.sh
+chmod +x install.sh
+./install.sh
+```
+
+---
+
+## 🗑️ Gỡ cài đặt
+
+Chạy 1 lệnh duy nhất để gỡ sạch ứng dụng khỏi hệ thống:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/adfoxtheme/app-tts/main/uninstall.sh | bash
 ```
 
 ---
