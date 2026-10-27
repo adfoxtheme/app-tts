@@ -1,0 +1,17 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.0.0
+torchaudio>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+soundfile>=0.12.0
+huggingface_hub>=0.20.0
+tqdm>=4.65.0
+unidecode>=1.3.6
+num2words>=0.5.12
+vinorm>=2.0.7
+viphoneme>=3.0.0
+underthesea>=8.0.0
+anyascii>=0.3.0
+numba>=0.58.0
+librosa>=0.10.0
+eng-to-ipa>=0.0.2

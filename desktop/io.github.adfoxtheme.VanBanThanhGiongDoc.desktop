@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Văn bản thành giọng đọc
+GenericName=Chuyển đổi văn bản thành giọng nói tiếng Việt
+Comment=Tổng hợp giọng đọc tiếng Việt siêu nhẹ với 5 giọng chuẩn và tính năng nhân bản giọng AI
+Exec=/home/ihoan/.local/bin/van-ban-thanh-giong-doc %U
+Icon=io.github.adfoxtheme.VanBanThanhGiongDoc
+Terminal=false
+Type=Application
+Categories=AudioVideo;Audio;Utility;Accessibility;
+Keywords=tts;speech;text;voice;vietnamese;vtts;giong doc;van ban;doc;
+StartupWMClass=io.github.adfoxtheme.VanBanThanhGiongDoc
+MimeType=text/plain;application/x-subrip;

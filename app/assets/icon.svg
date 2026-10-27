@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="40%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#312E81"/>
+    </linearGradient>
+
+    <!-- Wave Glow Gradient -->
+    <linearGradient id="waveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#C084FC"/>
+    </linearGradient>
+
+    <!-- Shadow -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#1E1B4B" flood-opacity="0.4"/>
+    </filter>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Squircle Base -->
+  <rect x="32" y="32" width="448" height="448" rx="108" fill="url(#bgGrad)" filter="url(#dropShadow)"/>
+
+  <!-- Inner border highlight -->
+  <rect x="34" y="34" width="444" height="444" rx="106" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="4"/>
+
+  <!-- Speech Bubble Backdrop Shape -->
+  <path d="M 128 140 C 128 116, 148 96, 172 96 L 340 96 C 364 96, 384 116, 384 140 L 384 270 C 384 294, 364 314, 340 314 L 230 314 L 176 358 L 176 314 L 172 314 C 148 314, 128 294, 128 270 Z" 
+        fill="rgba(255, 255, 255, 0.12)" stroke="rgba(255,255,255,0.25)" stroke-width="3"/>
+
+  <!-- Animated-like Sound Bars (Waveform inside speech bubble) -->
+  <g filter="url(#glow)">
+    <!-- Bar 1 -->
+    <rect x="168" y="180" width="16" height="50" rx="8" fill="url(#waveGrad)"/>
+    <!-- Bar 2 -->
+    <rect x="198" y="150" width="16" height="110" rx="8" fill="url(#waveGrad)"/>
+    <!-- Bar 3 -->
+    <rect x="228" y="130" width="16" height="150" rx="8" fill="#FFFFFF"/>
+    <!-- Bar 4 (Center peak) -->
+    <rect x="258" y="120" width="16" height="170" rx="8" fill="#FFFFFF"/>
+    <!-- Bar 5 -->
+    <rect x="288" y="135" width="16" height="140" rx="8" fill="#FFFFFF"/>
+    <!-- Bar 6 -->
+    <rect x="318" y="155" width="16" height="100" rx="8" fill="url(#waveGrad)"/>
+    <!-- Bar 7 -->
+    <rect x="348" y="185" width="16" height="40" rx="8" fill="url(#waveGrad)"/>
+  </g>
+
+  <!-- Modern Sound Arc Wave (Voice broadcasting) -->
+  <path d="M 290 380 C 330 380, 360 395, 390 420" fill="none" stroke="url(#waveGrad)" stroke-width="12" stroke-linecap="round" opacity="0.85"/>
+  <path d="M 122 420 C 152 395, 182 380, 222 380" fill="none" stroke="url(#waveGrad)" stroke-width="12" stroke-linecap="round" opacity="0.85"/>
+  <circle cx="256" cy="380" r="14" fill="#38BDF8" filter="url(#glow)"/>
+</svg>
