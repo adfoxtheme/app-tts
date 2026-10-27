@@ -48,7 +48,7 @@ output/
 
 # Model weights (auto-downloaded at runtime)
 pretrained/
-models/
+!engine/src/models/
 *.pth
 *.pt
 *.bin

@@ -124,10 +124,16 @@ class MainWindow(Adw.ApplicationWindow):
         self.btn_export_header.connect("clicked", self._on_export_clicked)
         btn_box_right.append(self.btn_export_header)
 
-        # Play / Generate Action Button
+        # Play / Generate Action Button in HeaderBar
         self.btn_main_action = Gtk.Button()
-        self._update_action_button_state(is_running=False)
-        self.btn_main_action.set_sensitive(False)
+        self.btn_main_action.add_css_class("suggested-action")
+        self.btn_main_action.set_tooltip_text("Tạo giọng đọc (TTS)")
+        btn_header_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        self.icon_header_action = Gtk.Image.new_from_icon_name("media-playback-start-symbolic")
+        self.lbl_header_action = Gtk.Label(label="Tạo TTS")
+        btn_header_box.append(self.icon_header_action)
+        btn_header_box.append(self.lbl_header_action)
+        self.btn_main_action.set_child(btn_header_box)
         self.btn_main_action.connect("clicked", self._on_main_action_clicked)
         btn_box_right.append(self.btn_main_action)
 
@@ -156,6 +162,9 @@ class MainWindow(Adw.ApplicationWindow):
         # RIGHT PANE: Voice Controls & Player
         right_box = self._create_control_pane()
         self.paned.set_end_child(right_box)
+
+        # Initialize button states
+        self._update_action_button_state(is_running=False)
 
     def _create_editor_pane(self) -> Gtk.Box:
         container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
@@ -204,6 +213,32 @@ class MainWindow(Adw.ApplicationWindow):
         scrolled.set_child(self.text_view)
 
         container.append(editor_frame)
+
+        # Main Generate TTS Action Button (Prominent, below editor)
+        action_btn_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        action_btn_box.set_margin_top(4)
+        action_btn_box.set_margin_bottom(4)
+
+        self.btn_generate_tts = Gtk.Button()
+        self.btn_generate_tts.add_css_class("suggested-action")
+        self.btn_generate_tts.add_css_class("pill")
+        self.btn_generate_tts.set_hexpand(True)
+        self.btn_generate_tts.set_size_request(-1, 46)
+        self.btn_generate_tts.set_tooltip_text("Bắt đầu chuyển đổi văn bản thành giọng đọc (TTS)")
+        self.btn_generate_tts.connect("clicked", self._on_main_action_clicked)
+
+        btn_content = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        btn_content.set_halign(Gtk.Align.CENTER)
+        self.icon_generate = Gtk.Image.new_from_icon_name("media-playback-start-symbolic")
+        self.icon_generate.set_pixel_size(18)
+        self.lbl_generate = Gtk.Label(label="🚀  Tạo giọng đọc (TTS)")
+        self.lbl_generate.add_css_class("title-4")
+        btn_content.append(self.icon_generate)
+        btn_content.append(self.lbl_generate)
+        self.btn_generate_tts.set_child(btn_content)
+
+        action_btn_box.append(self.btn_generate_tts)
+        container.append(action_btn_box)
 
         # Bottom Stats Bar
         stats_bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
@@ -491,6 +526,8 @@ class MainWindow(Adw.ApplicationWindow):
         if success:
             self.window_title.set_subtitle("Sẵn sàng")
             self.btn_main_action.set_sensitive(True)
+            if hasattr(self, 'btn_generate_tts'):
+                self.btn_generate_tts.set_sensitive(True)
             self._on_text_changed(self.text_buffer)
             self._show_toast("Mô hình AI đọc tiếng Việt đã sẵn sàng!")
         else:
@@ -499,13 +536,25 @@ class MainWindow(Adw.ApplicationWindow):
 
     def _update_action_button_state(self, is_running: bool):
         if is_running:
-            self.btn_main_action.set_label(" Dừng ")
-            self.btn_main_action.set_icon_name("media-playback-stop-symbolic")
+            if hasattr(self, 'lbl_generate'):
+                self.lbl_generate.set_label("🛑  Dừng tạo âm thanh")
+                self.icon_generate.set_from_icon_name("media-playback-stop-symbolic")
+                self.btn_generate_tts.remove_css_class("suggested-action")
+                self.btn_generate_tts.add_css_class("destructive-action")
+            if hasattr(self, 'lbl_header_action'):
+                self.lbl_header_action.set_label("Dừng")
+                self.icon_header_action.set_from_icon_name("media-playback-stop-symbolic")
             self.btn_main_action.remove_css_class("suggested-action")
             self.btn_main_action.add_css_class("destructive-action")
         else:
-            self.btn_main_action.set_label(" Đọc văn bản ")
-            self.btn_main_action.set_icon_name("media-playback-start-symbolic")
+            if hasattr(self, 'lbl_generate'):
+                self.lbl_generate.set_label("🚀  Tạo giọng đọc (TTS)")
+                self.icon_generate.set_from_icon_name("media-playback-start-symbolic")
+                self.btn_generate_tts.remove_css_class("destructive-action")
+                self.btn_generate_tts.add_css_class("suggested-action")
+            if hasattr(self, 'lbl_header_action'):
+                self.lbl_header_action.set_label("Tạo TTS")
+                self.icon_header_action.set_from_icon_name("media-playback-start-symbolic")
             self.btn_main_action.remove_css_class("destructive-action")
             self.btn_main_action.add_css_class("suggested-action")
 
@@ -517,10 +566,6 @@ class MainWindow(Adw.ApplicationWindow):
         # Estimate duration: average Vietnamese reading rate is ~3 words per second (180 wpm)
         est_seconds = int(words / 3.0)
         self.lbl_stats.set_label(f"{chars:,} ký tự  •  {words:,} từ  •  Ước tính: ~{est_seconds} giây")
-        
-        has_content = (chars > 0)
-        if self.engine._is_ready and not self.is_generating:
-            self.btn_main_action.set_sensitive(has_content)
 
     def _on_mode_toggled(self, button):
         if self.btn_mode_preset.get_active():
@@ -646,10 +691,15 @@ class MainWindow(Adw.ApplicationWindow):
             self.is_generating = False
             return
 
+        if not self.engine._is_ready:
+            self._show_toast("Mô hình AI đang được khởi tạo, vui lòng chờ trong giây lát...")
+            return
+
         start, end = self.text_buffer.get_bounds()
         text = self.text_buffer.get_text(start, end, True).strip()
         if not text:
-            self._show_toast("Vui lòng nhập văn bản cần đọc!")
+            self._show_toast("Vui lòng nhập hoặc dán văn bản tiếng Việt để tạo giọng đọc!")
+            self.text_view.grab_focus()
             return
 
         is_clone = self.btn_mode_clone.get_active()
